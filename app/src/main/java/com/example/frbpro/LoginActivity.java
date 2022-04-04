@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
+    private Button regitButton;
     private String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +28,28 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new MyClick());
+        regitButton = findViewById(R.id.regitButton);
+        regitButton.setOnClickListener(new Toregit());
+
 
 
         //增加一个点击事件，实现页面跳转
     }
+    public class Toregit implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            EditText editText=(EditText)findViewById(R.id.username);
+            username = editText.getText().toString();
+            editText = (EditText)findViewById(R.id.code);
+            String code = editText.getText().toString();
+            Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(LoginActivity.this, RegitActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
     public class MyClick implements View.OnClickListener{
         @Override
         public void onClick(View v){
@@ -50,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             String s=LoginActivity.sendGet("http://10.192.81.122:8080/user/login", "key=123&v=456");
-            System.out.println(s);
+            System.out.println("这是一个测试");
 
             //发送 POST 请求
             String sr=LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "key=123&v=456");

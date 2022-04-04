@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.frbpro.LoginActivity;
 import com.example.frbpro.MainActivity;
+import com.example.frbpro.PhotoActivity;
 import com.example.frbpro.R;
 import com.example.frbpro.databinding.FragmentDashboardBinding;
 
@@ -35,7 +36,7 @@ public class DashboardFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(),LoginActivity.class);
+                Intent intent=new Intent(getActivity(), PhotoActivity.class);
                 startActivity(intent);
             }
         });

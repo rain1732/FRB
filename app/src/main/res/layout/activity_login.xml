@@ -44,9 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点击登录"
-    android:layout_gravity="center"
+            android:layout_gravity="center"
             android:layout_marginTop="50dp"/>
-    <Button android:layout_width="wrap_content"
+
+    <Button android:id="@+id/regitButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即注册"
             android:layout_gravity="center"
