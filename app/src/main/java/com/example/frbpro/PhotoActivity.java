@@ -13,7 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
+import java.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +46,6 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        //textView = this.findViewById(R.id.textView);
         checkPermission();
 
         this.findViewById(R.id.button_select).setOnClickListener(v -> selectPictureFromGalleryIntent());
@@ -120,7 +119,6 @@ public class PhotoActivity extends AppCompatActivity {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -145,7 +143,7 @@ public class PhotoActivity extends AppCompatActivity {
                         null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                //picturePath就是图片在储存卡所在的位置
+
                 mCurrentPhotoPath = cursor.getString(columnIndex);
                 cursor.close();
 
@@ -224,16 +222,16 @@ public class PhotoActivity extends AppCompatActivity {
         String itemData;
 
         if (itemMatcher.find()) {
-            Toast.makeText(PhotoActivity.this, "识别项目成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PhotoActivity.this, "识别项目成功", Toast.LENGTH_LONG).show();
             itemData = itemMatcher.group(2);
         } else if (randomMatcher.find()) {
-            Toast.makeText(PhotoActivity.this, "数据可能有误，请检查", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PhotoActivity.this, "数据可能有误，请检查", Toast.LENGTH_LONG).show();
             itemData = randomMatcher.group(0);
         } else {
-            Toast.makeText(PhotoActivity.this, "程序君做不到qwq...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PhotoActivity.this, "程序君做不到qwq...", Toast.LENGTH_LONG).show();
             itemData = "";
         }
-
+        application test =(application)getApplication();
         EditText content = new EditText(this);
         content.setText(itemData);
         content.setPadding(35,40,30,35);
@@ -242,8 +240,24 @@ public class PhotoActivity extends AppCompatActivity {
                 .setView(content)
                 .setPositiveButton("确认", (dialogInterface, i) -> {
                     Toast.makeText(PhotoActivity.this, "已确认", Toast.LENGTH_SHORT).show();
-                    //TODO
-                    // 从content这个EditText中获取数据,http传输
+                    String string = content.getText().toString();
+
+                    //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.CHINA);
+                    //String t=format.format(new Date());
+                    //Log.e("msg", t);
+                    SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd-HH:mm:ss", Locale.CHINA);
+                    Date curDate = new Date(System.currentTimeMillis());
+                    String str = formatter.format(curDate);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            LoginActivity.sr = LoginActivity.sendPost("http://10.192.81.122:8080/user/send",
+                                    "userName="+test.getId()+"&date="+str+"&ill="+test.getIll()+"&index="+string);
+                        }
+                    }).start();
+
+
                 })
                 .setNegativeButton("取消", (dialogInterface, i) ->
                         Toast.makeText(PhotoActivity.this, "已取消", Toast.LENGTH_SHORT).show()

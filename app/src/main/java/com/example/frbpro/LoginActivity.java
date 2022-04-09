@@ -45,9 +45,11 @@ public class LoginActivity extends AppCompatActivity {
             editText = (EditText) findViewById(R.id.code);
             String code = editText.getText().toString();
             //Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
+            application test =(application)getApplication();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    test.setId(username);
                     LoginActivity.sr = LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "userName="+username+"&password="+code);
                 }
             }).start();
