@@ -24,7 +24,8 @@
     <Button android:layout_width="350dp" android:layout_height="400dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" tools:layout_editor_absoluteY="40dp"
             app:layout_constraintHorizontal_bias="0.491" tools:ignore="MissingConstraints"
-    android:id="@+id/photo"/>
+    android:id="@+id/photo"
+    android:text="拍照"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

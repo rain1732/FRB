@@ -9,5 +9,12 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="button_for_take">拍照</string>
+    <string name="button_for_select">从图库选择</string>
+    <string name="text_unfilled_name">文本准备中（QAQ）</string>
+    <string name="button_for_tutorial">教程</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

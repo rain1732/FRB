@@ -20,36 +20,18 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
-    private Button regitButton;
     private String username;
+    static String sr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new MyClick());
-        regitButton = findViewById(R.id.regitButton);
-        regitButton.setOnClickListener(new Toregit());
-
 
 
         //增加一个点击事件，实现页面跳转
     }
-    public class Toregit implements View.OnClickListener{
-        @Override
-        public void onClick(View v){
-            EditText editText=(EditText)findViewById(R.id.username);
-            username = editText.getText().toString();
-            editText = (EditText)findViewById(R.id.code);
-            String code = editText.getText().toString();
-            Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(LoginActivity.this, RegitActivity.class);
-            startActivity(intent);
-        }
-
-    }
-
     public class MyClick implements View.OnClickListener{
         @Override
         public void onClick(View v){
@@ -58,72 +40,61 @@ public class LoginActivity extends AppCompatActivity {
             editText = (EditText)findViewById(R.id.code);
             String code = editText.getText().toString();
             Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
-            //
-
-            /*try {
-                OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody requestBody = RequestBody.create("", MediaType.parse("application/json;charset=utf-8"));
-                Request request = new Request.Builder().url("http://10.192.81.122:8080/user/login").post(requestBody).build();
-                Response response = okHttpClient.newCall(request).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String s=LoginActivity.sendGet("http://10.192.81.122:8080/user/login", "key=123&v=456");
-            System.out.println("这是一个测试");
-
-            //发送 POST 请求
-            String sr=LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "key=123&v=456");
-            System.out.println(sr);*/
-
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    LoginActivity.sr=LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "userName=test1&password=test2");
+                }
+            }).start();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
+    }
 
-    }
-    public static String sendGet(String url, String param) {
-        String result = "";
-        BufferedReader in = null;
-        try {
-            String urlNameString = url + "?" + param;
-            URL realUrl = new URL(urlNameString);
-            // 打开和URL之间的连接
-            URLConnection connection = realUrl.openConnection();
-            // 设置通用的请求属性
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            // 建立实际的连接
-            connection.connect();
-            // 获取所有响应头字段
-            Map<String, List<String>> map = connection.getHeaderFields();
-            // 遍历所有的响应头字段
-            for (String key : map.keySet()) {
-                System.out.println(key + "--->" + map.get(key));
-            }
-            // 定义 BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-        } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
-            e.printStackTrace();
-        }
-        // 使用finally块来关闭输入流
-        finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }
-        return result;
-    }
+//    public static String sendGet(String url, String param) {
+//        String result = "";
+//        BufferedReader in = null;
+//        try {
+//            String urlNameString = url + "?" + param;
+//            URL realUrl = new URL(urlNameString);
+//            // 打开和URL之间的连接
+//            URLConnection connection = realUrl.openConnection();
+//            // 设置通用的请求属性
+//            connection.setRequestProperty("accept", "*/*");
+//            connection.setRequestProperty("connection", "Keep-Alive");
+//            connection.setRequestProperty("user-agent",
+//                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+//            // 建立实际的连接
+//            connection.connect();
+//            // 获取所有响应头字段
+//            Map<String, List<String>> map = connection.getHeaderFields();
+//            // 遍历所有的响应头字段
+//            for (String key : map.keySet()) {
+//                System.out.println(key + "--->" + map.get(key));
+//            }
+//            // 定义 BufferedReader输入流来读取URL的响应
+//            in = new BufferedReader(new InputStreamReader(
+//                    connection.getInputStream()));
+//            String line;
+//            while ((line = in.readLine()) != null) {
+//                result += line;
+//            }
+//        } catch (Exception e) {
+//            System.out.println("发送GET请求出现异常！" + e);
+//            e.printStackTrace();
+//        }
+//        // 使用finally块来关闭输入流
+//        finally {
+//            try {
+//                if (in != null) {
+//                    in.close();
+//                }
+//            } catch (Exception e2) {
+//                e2.printStackTrace();
+//            }
+//        }
+//        return result;
+//    }
 
 
     public static String sendPost(String url, String param) {

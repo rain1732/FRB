@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".PhotoActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.frbpro.PhotoActivity"
+                android:orientation="horizontal">
+    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_weight="4" android:layout_height="match_parent" android:orientation="vertical">
+    <Button
+            android:id="@+id/button_take"
+            android:text="@string/button_for_take"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+
+            android:layout_gravity="center"/>
+    <Button
+            android:id="@+id/button_select"
+            android:text="@string/button_for_select"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+    android:layout_gravity="center"/>
+
+    <Button
+            android:id="@+id/button_tutorial"
+            android:text="@string/button_for_tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"/>
+
+    <TextView
+            android:text="@string/text_unfilled_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView"
+            android:layout_alignParentEnd="true"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="144dp"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent"/>
+</LinearLayout>
