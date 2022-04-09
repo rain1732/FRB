@@ -20,33 +20,66 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
-    private String username;
-    static String sr;
+    private Button regitButton;
+    static String sr = "3";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new MyClick());
-
+        regitButton = findViewById(R.id.regitButton);
+        regitButton.setOnClickListener(new MyClick1());
 
         //增加一个点击事件，实现页面跳转
     }
-    public class MyClick implements View.OnClickListener{
+
+    public class MyClick implements View.OnClickListener {
         @Override
-        public void onClick(View v){
-            EditText editText=(EditText)findViewById(R.id.username);
-            username = editText.getText().toString();
-            editText = (EditText)findViewById(R.id.code);
+        public void onClick(View v) {
+            //Toast.makeText(LoginActivity.this, "正在登录中", Toast.LENGTH_SHORT).show();
+            EditText editText = (EditText) findViewById(R.id.username);
+            String username = editText.getText().toString();
+            editText = (EditText) findViewById(R.id.code);
             String code = editText.getText().toString();
-            Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
-            new Thread(new Runnable(){
+            //Toast.makeText(LoginActivity.this,username+code,Toast.LENGTH_LONG).show();
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    LoginActivity.sr=LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "userName=test1&password=test2");
+                    LoginActivity.sr = LoginActivity.sendPost("http://10.192.81.122:8080/user/login", "userName="+username+"&password="+code);
                 }
             }).start();
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            //startActivity(intent);
+
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            switch (sr) {
+                case "1":
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case "0":
+                    Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+                    break;
+                case "-1":Toast.makeText(LoginActivity.this, "用户未注册", Toast.LENGTH_SHORT).show();
+                    break;
+                case "2":Toast.makeText(LoginActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
+
+    public class MyClick1 implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginActivity.this, RegitActivity.class);
             startActivity(intent);
         }
     }
@@ -127,20 +160,19 @@ public class LoginActivity extends AppCompatActivity {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
+            System.out.println("发送 POST 请求出现异常！" + e);
             e.printStackTrace();
         }
         //使用finally块来关闭输出流、输入流
-        finally{
-            try{
-                if(out!=null){
+        finally {
+            try {
+                if (out != null) {
                     out.close();
                 }
-                if(in!=null){
+                if (in != null) {
                     in.close();
                 }
-            }
-            catch(IOException ex){
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }

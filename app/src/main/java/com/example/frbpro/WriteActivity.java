@@ -1,6 +1,5 @@
 package com.example.frbpro;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.io.BufferedReader;
@@ -9,12 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
-import android.os.Bundle;
-import android.os.FileObserver;
 import android.app.Activity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -57,12 +52,12 @@ public class WriteActivity extends Activity implements OnClickListener{
                     //把读取的内容显示到Activity中
                     et2.setText(result);
                     bufr.close();
-                    Toast.makeText(WriteActivity.this, "读取文件成功", 0).show();
+                    Toast.makeText(WriteActivity.this, "读取文件成功", Toast.LENGTH_SHORT).show();
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
                 } catch (FileNotFoundException e1) {
                     //如果文件不存在,在FileNotFoundException中说明
-                    Toast.makeText(WriteActivity.this, "文件不存在", 0).show();
+                    Toast.makeText(WriteActivity.this, "文件不存在", Toast.LENGTH_SHORT).show();
                     e1.printStackTrace();
                 } catch (IOException e) {
 
@@ -75,7 +70,7 @@ public class WriteActivity extends Activity implements OnClickListener{
                     FileOutputStream fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
                     fos.write(et1.getText().toString().getBytes());
                     fos.close();
-                    Toast.makeText(WriteActivity.this, "写入文件成功", 0).show();
+                    Toast.makeText(WriteActivity.this, "写入文件成功", Toast.LENGTH_SHORT).show();
                     et1.setText("");
                 } catch (FileNotFoundException e) {
 
@@ -88,14 +83,14 @@ public class WriteActivity extends Activity implements OnClickListener{
             case R.id.btn3:
                 //删除文件
                 deleteFile(FILE_NAME);
-                Toast.makeText(WriteActivity.this, "删除文件成功", 0).show();
+                Toast.makeText(WriteActivity.this, "删除文件成功", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn4:
                 //列出文件中内容的名字
                 String[] file = fileList();
                 for (int i = 0; i < file.length; i++) {
                     Log.i("main", file[i]);
-                    Toast.makeText(WriteActivity.this, file[i].toString(), 0).show();
+                    Toast.makeText(WriteActivity.this, file[i].toString(), Toast.LENGTH_SHORT).show();
                 }
                 break;
 

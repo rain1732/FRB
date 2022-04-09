@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.home.HomeFragment"
+        android:orientation="horizontal">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="300dp"
+                    android:layout_marginLeft="30dp"
+                  android:layout_marginRight="30dp"
+                  android:background="#CCCCCC"
+                  android:orientation="vertical">
 
-    <TextView
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="尿酸"
+                android:textSize="30dp"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/data1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="123"/>
+        <TextView
+                android:id="@+id/data2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="123"/>
+        <TextView
+                android:id="@+id/data3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="123"/>
+        <TextView
+                android:id="@+id/data4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="123"/>
+        <TextView
+                android:id="@+id/data5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="123"/>
+        <TextView
+                android:id="@+id/data_analyze"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:text="这里是数据分析"/>
+    </LinearLayout>
+
+    <!--->TextView
             android:id="@+id/text_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,6 +71,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"/<!-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

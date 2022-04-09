@@ -40,16 +40,7 @@ public class DashboardFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return root;
-        /*final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.frbpro;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,27 +18,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import com.example.frbpro.R;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PhotoActivity extends AppCompatActivity {
     public static final String TESS_DATA = "/tessdata";
     public static final int TAKE_PHOTO = 1024;
     public static final int SELECT_PHOTO  = 1023;
     private static final String TAG = PhotoActivity.class.getSimpleName();
-    private TextView textView;
     private TessBaseAPI tessBaseAPI;
     private String mCurrentPhotoPath;
 
@@ -46,7 +46,7 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        textView = this.findViewById(R.id.textView);
+        //textView = this.findViewById(R.id.textView);
         checkPermission();
 
         this.findViewById(R.id.button_select).setOnClickListener(v -> selectPictureFromGalleryIntent());
@@ -191,7 +191,7 @@ public class PhotoActivity extends AppCompatActivity {
             options.inSampleSize = 6;
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
             String result = this.getText(bitmap);
-            textView.setText(result);
+            matchText(result);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
@@ -214,5 +214,41 @@ public class PhotoActivity extends AppCompatActivity {
         }
         tessBaseAPI.end();
         return retStr;
+    }
+
+    private void matchText(String text) {
+        Pattern itemPattern = Pattern.compile("(尿酸).*?(\\d+\\.?\\d+)"); //TODO 检测项目名用get方法获取
+        Pattern randomPattern = Pattern.compile("\\d+\\.?\\d+");
+        Matcher itemMatcher = itemPattern.matcher(text);
+        Matcher randomMatcher = randomPattern.matcher(text);
+        String itemData;
+
+        if (itemMatcher.find()) {
+            Toast.makeText(PhotoActivity.this, "识别项目成功", Toast.LENGTH_SHORT).show();
+            itemData = itemMatcher.group(2);
+        } else if (randomMatcher.find()) {
+            Toast.makeText(PhotoActivity.this, "数据可能有误，请检查", Toast.LENGTH_SHORT).show();
+            itemData = randomMatcher.group(0);
+        } else {
+            Toast.makeText(PhotoActivity.this, "程序君做不到qwq...", Toast.LENGTH_SHORT).show();
+            itemData = "";
+        }
+
+        EditText content = new EditText(this);
+        content.setText(itemData);
+        content.setPadding(35,40,30,35);
+        AlertDialog dataCheckDialog = new AlertDialog.Builder(this)
+                .setTitle("读取数据确认 : 尿酸")    //TODO 检测项目名用get方法获取
+                .setView(content)
+                .setPositiveButton("确认", (dialogInterface, i) -> {
+                    Toast.makeText(PhotoActivity.this, "已确认", Toast.LENGTH_SHORT).show();
+                    //TODO
+                    // 从content这个EditText中获取数据,http传输
+                })
+                .setNegativeButton("取消", (dialogInterface, i) ->
+                        Toast.makeText(PhotoActivity.this, "已取消", Toast.LENGTH_SHORT).show()
+                )
+                .create();
+        dataCheckDialog.show();
     }
 }
